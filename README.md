@@ -1,3 +1,3 @@
-# darbiadev-utilities
+# api.letsbuilda.dev
 
-Namespace for utility functions
+Public API for our projects
