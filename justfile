@@ -16,6 +16,9 @@ lint:
 pylint:
 	python -m pylint src/
 
+pre-commit:
+	pre-commit run --all-files
+
 test:
 	python -m pytest
 
