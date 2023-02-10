@@ -1,0 +1,62 @@
+[project]
+name = "api.letsbuilda.dev"
+description = "Public API for our projects"
+authors = [
+    { name = "Bradley Reynolds", email = "bradley.reynolds@darbia.dev" },
+]
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "fastapi==0.90.1",
+    "uvicorn[standard]==0.20.0",
+    "imsosorry==1.2.0",
+]
+dynamic = ['version']
+
+[project.urls]
+repository = "https://github.com/letsbuilda/api.letsbuilda.dev/"
+documentation = "https://docs.letsbuilda.dev/api.letsbuilda.dev/"
+
+[project.optional-dependencies]
+dev = [
+    "black",
+    "isort",
+    "pylint",
+    "pre-commit",
+]
+tests = [
+    "pytest",
+    "httpx", # for fastapi.testclient.TestClient
+]
+docs = [
+    "sphinx",
+    "furo",
+    "sphinx-autoapi",
+    "releases",
+    "toml",
+]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.dynamic]
+version = { attr = "api.__version__" }
+
+[tool.sphinx]
+copyright = "Let's build a ..."
+author = "Bradley Reynolds"
+
+[tool.black]
+target-version = ["py310"]
+line-length = 120
+
+[tool.isort]
+profile = "black"
+
+[tool.pytest.ini_options]
+addopts = "tests -r a -v --doctest-modules src"
+
+[tool.pylint.format]
+max-line-length = 120
