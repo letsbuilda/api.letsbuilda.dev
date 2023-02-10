@@ -2,6 +2,7 @@
 
 from fastapi import APIRouter, FastAPI
 from imsosorry import uwuify
+
 # pylint: disable-next=no-name-in-module
 from pydantic import BaseModel
 
@@ -10,6 +11,7 @@ from . import __version__
 
 class TextModel(BaseModel):
     """Generic model for accepting arbitrary plain-text input"""
+
     text: str
 
 
