@@ -1,7 +1,7 @@
 [project]
 name = "api.letsbuilda.dev"
 description = "Public API for our projects"
-version = "1.0.0"
+version = "1.1.0"
 authors = [
     { name = "Bradley Reynolds", email = "bradley.reynolds@darbia.dev" },
 ]
