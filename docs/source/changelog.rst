@@ -4,6 +4,9 @@
 Changelog
 =========
 
+- :release:`1.3.0 <20th February 2023>`
+- :feature:`8` Load version dynamically
+
 - :release:`1.2.0 <20th February 2023>`
 - :feature:`5` Add Sentry.io
 
