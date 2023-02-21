@@ -1,5 +1,8 @@
 """API server definition"""
 
+from os import getenv
+
+import sentry_sdk
 from fastapi import APIRouter, FastAPI
 from imsosorry import uwuify
 
@@ -7,6 +10,19 @@ from imsosorry import uwuify
 from pydantic import BaseModel
 
 from . import __version__
+
+release_prefix = getenv("API_SENTRY_RELEASE_PREFIX", "api")
+git_sha = getenv("GIT_SHA", "development")
+sentry_sdk.init(
+    dsn=getenv("API_SENTRY_DSN"),
+    environment=getenv("API_SENTRY_ENV"),
+    send_default_pii=True,
+    traces_sample_rate=1.0,
+    _experiments={
+        "profiles_sample_rate": 1.0,
+    },
+    release=f"{release_prefix}@{git_sha}",
+)
 
 
 class TextModel(BaseModel):
