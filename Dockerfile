@@ -1,7 +1,8 @@
 FROM --platform=linux/amd64 python:slim-bullseye
 
-# Define Git SHA build argument for Sentry
+# Set Git SHA environment variable
 ARG git_sha="development"
+ENV GIT_SHA=$git_sha
 
 COPY . .
 
