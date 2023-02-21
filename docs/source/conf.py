@@ -5,14 +5,17 @@ https://www.sphinx-doc.org/en/master/usage/configuration.html
 """
 
 from pathlib import Path
+
 try:
     from tomllib import loads as toml_loads
 except ImportError:
     from toml import loads as toml_loads
 
+from api import __version__
+
 project_config = toml_loads(Path("../../pyproject.toml").read_text())
 project: str = project_config["project"]["name"]
-release: str = project_config["project"]["version"]
+release: str = __version__
 REPO_LINK: str = project_config["project"]["urls"]["repository"]
 copyright: str = project_config["tool"]["sphinx"]["copyright"]  # noqa: A001
 author: str = project_config["tool"]["sphinx"]["author"]
