@@ -4,6 +4,9 @@
 Changelog
 =========
 
+- :release:`1.4.0 <20th February 2023>`
+- :feature:`13` Actually add ``GIT_SHA`` to ``Dockerfile``
+
 - :release:`1.3.0 <20th February 2023>`
 - :feature:`8` Load version dynamically
 
