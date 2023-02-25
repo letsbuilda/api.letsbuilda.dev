@@ -35,7 +35,6 @@ docs = [
     "furo",
     "sphinx-autoapi",
     "releases",
-    "toml",
 ]
 
 [build-system]
@@ -44,10 +43,6 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.dynamic]
 version = { attr = "api.__version__" }
-
-[tool.sphinx]
-copyright = "Let's build a ..."
-author = "Bradley Reynolds"
 
 [tool.black]
 target-version = ["py310"]
