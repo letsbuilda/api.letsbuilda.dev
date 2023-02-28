@@ -11,7 +11,7 @@ dependencies = [
     "fastapi==0.92.0",
     "uvicorn[standard]==0.20.0",
     "imsosorry==1.2.0",
-    "sentry-sdk[fastapi]==1.15.0",
+    "sentry-sdk[fastapi]==1.16.0",
 ]
 dynamic = ["version"]
 
