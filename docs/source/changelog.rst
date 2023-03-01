@@ -4,6 +4,9 @@
 Changelog
 =========
 
+- :release:`1.5.0 <28th February 2023>`
+- :feature:`17` Pin the Docker image to a specific SHA-256 digest to help with reproducible builds
+
 - :release:`1.4.0 <20th February 2023>`
 - :feature:`13` Actually add ``GIT_SHA`` to ``Dockerfile``
 
