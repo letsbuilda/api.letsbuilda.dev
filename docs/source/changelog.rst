@@ -4,6 +4,9 @@
 Changelog
 =========
 
+- :release:`1.6.0 <09th March 2023>`
+- :feature:`21` Add random number generation
+
 - :release:`1.5.0 <28th February 2023>`
 - :feature:`17` Pin the Docker image to a specific SHA-256 digest to help with reproducible builds
 
