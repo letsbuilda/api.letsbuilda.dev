@@ -1,6 +1,7 @@
 """API server definition"""
 
 from os import getenv
+from random import randint
 
 import sentry_sdk
 from fastapi import APIRouter, FastAPI
@@ -31,6 +32,13 @@ class TextModel(BaseModel):
     text: str
 
 
+class Numbers(BaseModel):
+    """Model to hold a list of numbers"""
+
+    numbers: list[int]
+    total: int
+
+
 app = FastAPI(
     title="Let's Build A API",
     description="An API to host Let's Build A's projects",
@@ -58,6 +66,13 @@ router_fun = APIRouter(prefix="/fun", tags=["fun"])
 async def uwuify_route(text: TextModel):
     """Convert text to UwU meme style"""
     return {"text": uwuify(text.text)}
+
+
+@router_fun.get("/random-numbers/{quantity}/{range_high}")
+async def random_numbers(quantity: int, range_high: int) -> Numbers:
+    """Generate bulk random numbers"""
+    numbers = [randint(1, range_high) for _ in range(quantity)]
+    return Numbers(numbers=numbers, total=sum(numbers))
 
 
 app.include_router(router_fun)
