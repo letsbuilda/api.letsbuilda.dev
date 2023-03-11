@@ -11,6 +11,7 @@ from imsosorry import uwuify
 from pydantic import BaseModel
 
 from . import __version__
+from .modules.generators import router_generators
 
 release_prefix = getenv("API_SENTRY_RELEASE_PREFIX", "api")
 git_sha = getenv("GIT_SHA", "development")
@@ -76,3 +77,5 @@ async def random_numbers(quantity: int, range_high: int) -> Numbers:
 
 
 app.include_router(router_fun)
+
+app.include_router(router_generators)
