@@ -4,6 +4,9 @@
 Changelog
 =========
 
+- :release:`1.7.0 <11th March 2023>`
+- :feature:`24` Add random number generation
+
 - :release:`1.6.0 <09th March 2023>`
 - :feature:`21` Add random number generation
 
