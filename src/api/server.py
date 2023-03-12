@@ -4,6 +4,7 @@ from os import getenv
 
 import sentry_sdk
 from fastapi import APIRouter, FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from imsosorry import uwuify
 
 # pylint: disable-next=no-name-in-module
@@ -36,6 +37,13 @@ app = FastAPI(
     title="Let's Build A API",
     description="An API to host Let's Build A's projects",
     version=__version__,
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 router_root = APIRouter()
