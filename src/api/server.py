@@ -4,6 +4,7 @@ from os import getenv
 
 import sentry_sdk
 from fastapi import APIRouter, FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from imsosorry import uwuify
 
 # pylint: disable-next=no-name-in-module
@@ -11,8 +12,6 @@ from pydantic import BaseModel
 
 from . import __version__
 from .modules.generators import router_generators
-
-from fastapi.middleware.cors import CORSMiddleware
 
 release_prefix = getenv("API_SENTRY_RELEASE_PREFIX", "api")
 git_sha = getenv("GIT_SHA", "development")
