@@ -3,6 +3,8 @@
 
 Changelog
 =========
+- :release:`1.8.1 <11th March 2023>`
+- :feature:`28` CORS
 
 - :release:`1.8.0 <11th March 2023>`
 - :feature:`26` Move random number generation to generators module
