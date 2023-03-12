@@ -5,6 +5,7 @@ from os import getenv
 import sentry_sdk
 from fastapi import APIRouter, FastAPI
 from imsosorry import uwuify
+
 # pylint: disable-next=no-name-in-module
 from pydantic import BaseModel
 

@@ -5,6 +5,7 @@ from random import randint
 from typing import Literal
 
 from fastapi import APIRouter
+
 # pylint: disable-next=no-name-in-module
 from pydantic import BaseModel, Field, validator
 
@@ -44,10 +45,10 @@ class NumbersConfig(BaseModel):
     upper_bound: int | None = Field(default=1)
     quantity: int | None = Field(gt=0, default=1)
 
-    @validator('upper_bound')
+    @validator("upper_bound")
     def upper_bound_must_be_greater_than_lower_bound(cls, v, values, **kwargs):
-        if 'lower_bound' in values and v < values['lower_bound']:
-            raise ValueError('upper bound must be greater than lower bound')
+        if "lower_bound" in values and v < values["lower_bound"]:
+            raise ValueError("upper bound must be greater than lower bound")
         return v
 
 
