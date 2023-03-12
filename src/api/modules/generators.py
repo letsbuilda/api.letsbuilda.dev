@@ -46,7 +46,8 @@ class NumbersConfig(BaseModel):
     quantity: int | None = Field(gt=0, default=1)
 
     @validator("upper_bound")
-    def upper_bound_must_be_greater_than_lower_bound(cls, v, values, **kwargs):
+    def upper_bound_must_be_greater_than_lower_bound(cls, v, values):
+        """Confirm upper bound is greater than lower bound"""
         if "lower_bound" in values and v < values["lower_bound"]:
             raise ValueError("upper bound must be greater than lower bound")
         return v
