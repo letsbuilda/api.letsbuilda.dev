@@ -58,6 +58,8 @@ addopts = "tests -r a -v --doctest-modules src"
 max-line-length = 120
 
 [tool.pylint.messages_control]
-disable = "R0903"
+disable = "C0103,R0903,E0213"
 # justifications:
+# C0103 (invalid-name) - pydantic
 # R0903 (too-few-public-methods) - models
+# E0213 (no-self-argument) - pydantic
