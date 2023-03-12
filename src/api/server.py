@@ -12,6 +12,8 @@ from pydantic import BaseModel
 from . import __version__
 from .modules.generators import router_generators
 
+from fastapi.middleware.cors import CORSMiddleware
+
 release_prefix = getenv("API_SENTRY_RELEASE_PREFIX", "api")
 git_sha = getenv("GIT_SHA", "development")
 sentry_sdk.init(
@@ -36,6 +38,13 @@ app = FastAPI(
     title="Let's Build A API",
     description="An API to host Let's Build A's projects",
     version=__version__,
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 router_root = APIRouter()
