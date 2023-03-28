@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 python:3.11-slim@sha256:66e41d125c90d679ad69b264ac7b78a3bd27e7510b63ba5987ad42678bbefc32
+FROM --platform=linux/amd64 python:3.11-slim@sha256:2f749ef90f54fd4b3c77cde78eec23ab5b8199d9ac84e4ced6ae523ef223ef7b
 
 RUN adduser --disabled-password api
 USER api
