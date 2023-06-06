@@ -11,6 +11,7 @@ from imsosorry import uwuify
 from pydantic import BaseModel
 
 from . import __version__
+from .models import ServerMetadata
 from .modules.generators import router_generators
 
 release_prefix = getenv("API_SENTRY_RELEASE_PREFIX", "api")
@@ -48,12 +49,12 @@ router_root = APIRouter()
 
 
 @router_root.get("/")
-async def root_route():
-    """Get base metadata"""
-    return {
-        "message": "Welcome to the API",
-        "version": __version__,
-    }
+async def metadata() -> ServerMetadata:
+    """Get server metadata"""  
+    return ServerMetadata(
+        version=__version__,
+        server_commit=getenv("GIT_SHA", "development"),
+    )
 
 
 app.include_router(router_root)
