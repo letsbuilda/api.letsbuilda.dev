@@ -8,7 +8,6 @@ USAGE
 
 COMMANDS
     init              install Python build tools
-    install           install local package in production mode
     install-dev       install local package in editable mode
     lint              run `isort` and `black`
     pylint            run `pylint`
@@ -19,7 +18,7 @@ COMMANDS
 #>
 param(
     [Parameter(Position = 0)]
-    [ValidateSet("init", "install", "install-dev", "lint", "pylint", "test", "build-dist", "clean", "help")]
+    [ValidateSet("init", "install-dev", "lint", "pylint", "test", "build-dist", "clean", "help")]
     [string]$Command
 )
 
@@ -31,11 +30,6 @@ function Invoke-Help
 function Invoke-Init
 {
     python -m pip install --upgrade pip wheel setuptools build
-}
-
-function Invoke-Install
-{
-    python -m pip install --upgrade .
 }
 
 function Invoke-Install-Dev
@@ -83,9 +77,6 @@ switch ($Command)
 {
     "init"    {
         Invoke-Init
-    }
-    "install"  {
-        Invoke-Install
     }
     "install-dev" {
         Invoke-Install-Dev
