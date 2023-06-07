@@ -1,4 +1,7 @@
-fastapi
+# Core
 uvicorn[standard]
-imsosorry
+fastapi
 sentry-sdk[fastapi]
+
+# Fun module
+imsosorry
