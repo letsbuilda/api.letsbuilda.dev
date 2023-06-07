@@ -15,6 +15,7 @@ documentation = "https://docs.letsbuilda.dev/api.letsbuilda.dev/"
 
 [project.optional-dependencies]
 dev = [
+    "pip-tools",
     "pre-commit",
     "black",
     "isort",
