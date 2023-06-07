@@ -50,8 +50,8 @@ profile = "black"
 [tool.pytest.ini_options]
 addopts = "tests -r a -v --doctest-modules src"
 
-[tool.pylint.format]
-max-line-length = 120
+[tool.ruff]
+line-length = 120
 
 [tool.pylint.messages_control]
 disable = "C0103,R0903,E0213"
