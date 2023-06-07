@@ -15,10 +15,10 @@ documentation = "https://docs.letsbuilda.dev/api.letsbuilda.dev/"
 
 [project.optional-dependencies]
 dev = [
+    "pre-commit",
     "black",
     "isort",
-    "pylint",
-    "pre-commit",
+    "ruff",
 ]
 tests = [
     "pytest",
