@@ -12,6 +12,6 @@ def test_read_main():
     response = client.get("/")
     assert response.status_code == 200
     assert response.json() == {
-        "message": "Welcome to the API",
         "version": __version__,
+        "server_commit": "development",
     }

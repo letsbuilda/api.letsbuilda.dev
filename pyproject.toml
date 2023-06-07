@@ -7,13 +7,7 @@ authors = [
 license = { text = "MIT" }
 readme = "README.md"
 requires-python = ">=3.10"
-dependencies = [
-    "fastapi==0.95.1",
-    "uvicorn[standard]==0.21.1",
-    "imsosorry==1.2.0",
-    "sentry-sdk[fastapi]==1.19.1",
-]
-dynamic = ["version"]
+dynamic = ["version", "dependencies"]
 
 [project.urls]
 repository = "https://github.com/letsbuilda/api.letsbuilda.dev/"
@@ -21,10 +15,11 @@ documentation = "https://docs.letsbuilda.dev/api.letsbuilda.dev/"
 
 [project.optional-dependencies]
 dev = [
+    "pip-tools",
+    "pre-commit",
     "black",
     "isort",
-    "pylint",
-    "pre-commit",
+    "ruff",
 ]
 tests = [
     "pytest",
@@ -43,6 +38,7 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.dynamic]
 version = { attr = "api.__version__" }
+dependencies = { file = ["requirements.txt"] }
 
 [tool.black]
 target-version = ["py310"]
