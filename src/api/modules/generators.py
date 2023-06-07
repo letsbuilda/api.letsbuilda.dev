@@ -41,9 +41,9 @@ async def bulk_uuids(config: UUIDConfig) -> UUIDs:
 class NumbersConfig(BaseModel):
     """Model to hold configuration for number generation"""
 
-    lower_bound: int | None = Field(default=1)
-    upper_bound: int | None = Field(default=1)
-    quantity: int | None = Field(gt=0, default=1)
+    lower_bound: int = Field(default=1)
+    upper_bound: int = Field(default=1)
+    quantity: int = Field(gt=0, default=1)
 
     @validator("upper_bound")
     def upper_bound_must_be_greater_than_lower_bound(cls, v, values):
