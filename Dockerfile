@@ -5,12 +5,16 @@ USER api
 
 ENV PATH="${PATH}:/home/api/.local/bin"
 
-# Set Git SHA environment variable
+# Define Git SHA build argument for sentry
 ARG git_sha="development"
 ENV GIT_SHA=$git_sha
 
-WORKDIR /app
-COPY pyproject.toml src ./
+WORKDIR /home/api
+
+COPY requirements.txt .
+RUN python -m pip install --requirement requirements.txt
+
+COPY --chown=api:api . .
 RUN python -m pip install .
 
 EXPOSE 8080
