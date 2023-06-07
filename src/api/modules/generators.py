@@ -9,7 +9,7 @@ from fastapi import APIRouter
 # pylint: disable-next=no-name-in-module
 from pydantic import BaseModel, Field, validator
 
-router_generators = APIRouter(prefix="/generators", tags=["generators"])
+router = APIRouter(prefix="/generators", tags=["generators"])
 
 
 class UUIDConfig(BaseModel):
@@ -25,7 +25,7 @@ class UUIDs(BaseModel):
     uuids: list[str]
 
 
-@router_generators.post("/uuids/")
+@router.post("/uuids/")
 async def bulk_uuids(config: UUIDConfig) -> UUIDs:
     """Generate bulk UUIDs"""
     if config.uuid_type == 1:
@@ -60,7 +60,7 @@ class Numbers(BaseModel):
     total: int
 
 
-@router_generators.post("/random-numbers/")
+@router.post("/random-numbers/")
 async def random_numbers(config: NumbersConfig) -> Numbers:
     """Generate bulk random numbers"""
     numbers = [randint(config.lower_bound, config.upper_bound) for _ in range(config.quantity)]

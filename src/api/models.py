@@ -1,5 +1,6 @@
 """Model definitions"""
 
+from pydantic import BaseModel
 from pydantic.dataclasses import dataclass
 
 
@@ -16,3 +17,9 @@ class ServerMetadata:
 
     version: str
     server_commit: str
+
+
+class TextModel(BaseModel):
+    """Generic model for accepting arbitrary plain-text input"""
+
+    text: str
