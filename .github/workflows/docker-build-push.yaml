@@ -22,6 +22,7 @@ jobs:
   deploy:
     needs: build-push
     runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
     steps:
       - name: "Update deployment"
         run: curl -X POST '${{ secrets.DEPLOY_WEBHOOK }}'
