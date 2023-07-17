@@ -40,7 +40,7 @@ typing-extensions==4.6.3
     # via pydantic
 urllib3==2.0.2
     # via sentry-sdk
-uvicorn[standard]==0.22.0
+uvicorn[standard]==0.23.0
     # via -r requirements.in
 uvloop==0.17.0
     # via uvicorn
