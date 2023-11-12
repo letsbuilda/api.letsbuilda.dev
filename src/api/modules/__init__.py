@@ -1,4 +1,4 @@
-"""Modules of the API"""
+"""Modules of the API."""
 
 from importlib import import_module
 from pkgutil import walk_packages
