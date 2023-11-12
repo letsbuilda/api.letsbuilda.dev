@@ -7,38 +7,26 @@ authors = [
 license = { text = "MIT" }
 readme = "README.md"
 requires-python = ">=3.10"
-dynamic = ["version", "dependencies"]
+dynamic = ["version", "dependencies", "optional-dependencies"]
 
 [project.urls]
 repository = "https://github.com/letsbuilda/api.letsbuilda.dev/"
 documentation = "https://docs.letsbuilda.dev/api.letsbuilda.dev/"
 
-[project.optional-dependencies]
-dev = [
-    "pip-tools",
-    "pre-commit",
-    "black",
-    "isort",
-    "ruff",
-]
-tests = [
-    "pytest",
-    "httpx", # for fastapi.testclient.TestClient
-]
-docs = [
-    "sphinx",
-    "furo",
-    "sphinx-autoapi",
-    "releases",
-]
-
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools.dynamic]
-version = { attr = "api.__version__" }
-dependencies = { file = ["requirements.txt"] }
+[tool.setuptools.dynamic.version]
+attr = "api.__version__"
+
+[tool.setuptools.dynamic.dependencies]
+file = ["requirements/requirements.txt"]
+
+[tool.setuptools.dynamic.optional-dependencies]
+dev = { file = ["requirements/requirements-dev.txt"] }
+tests = { file = ["requirements/requirements-tests.txt"] }
+docs = { file = ["requirements/requirements-docs.txt"] }
 
 [tool.black]
 target-version = ["py310"]

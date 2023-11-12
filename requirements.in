@@ -1,7 +1,0 @@
-# Core
-uvicorn[standard]
-fastapi
-sentry-sdk[fastapi]
-
-# Fun module
-imsosorry
