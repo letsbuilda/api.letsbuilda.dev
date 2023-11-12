@@ -11,8 +11,7 @@ COMMANDS
     install-dev       install local package in editable mode
     update-deps       update the dependencies
     upgrade-deps      upgrade the dependencies
-    lint              run `isort` and `black`
-    pylint            run `pylint`
+    lint              run `pre-commit` and `ruff`
     test              run `pytest`
     build-dist        run `python -m build`
     clean             delete generated content
@@ -20,7 +19,7 @@ COMMANDS
 #>
 param(
     [Parameter(Position = 0)]
-    [ValidateSet("init", "install-dev", "update-deps", "upgrade-deps", "lint", "pylint", "test", "build-dist", "clean", "help")]
+    [ValidateSet("init", "install-dev", "update-deps", "upgrade-deps", "lint", "test", "build-dist", "clean", "help")]
     [string]$Command
 )
 
@@ -41,24 +40,28 @@ function Invoke-Install-Dev
 
 function Invoke-Update-Deps
 {
-    pip-compile --output-file requirements.txt --resolver=backtracking requirements.in
+    python -m pip install --upgrade pip-tools
+    pip-compile --output-file requirements/requirements.txt requirements/requirements.in
+    pip-compile --output-file requirements/requirements-dev.txt requirements/requirements-dev.in
+    pip-compile --output-file requirements/requirements-tests.txt requirements/requirements-tests.in
+    pip-compile --output-file requirements/requirements-docs.txt requirements/requirements-docs.in
 }
 
 function Invoke-Upgrade-Deps
 {
+    python -m pip install --upgrade pip-tools pre-commit
     pre-commit autoupdate
-    pip-compile --output-file requirements.txt --resolver=backtracking --upgrade requirements.in
+    pip-compile --upgrade --output-file requirements/requirements.txt requirements/requirements.in
+    pip-compile --upgrade --output-file requirements/requirements-dev.txt requirements/requirements-dev.in
+    pip-compile --upgrade --output-file requirements/requirements-tests.txt requirements/requirements-tests.in
+    pip-compile --upgrade --output-file requirements/requirements-docs.txt requirements/requirements-docs.in
 }
 
 function Invoke-Lint
 {
-    python -m isort src/
-    python -m black src/
-}
-
-function Invoke-Pylint
-{
-    python -m pylint src/
+    pre-commit run --all-files
+    python -m ruff --fix .
+    python -m ruff format .
 }
 
 function Invoke-Test
@@ -102,9 +105,6 @@ switch ($Command)
     }
     "upgrade-deps"  {
         Invoke-Upgrade-Deps
-    }
-    "pylint"    {
-        Invoke-Pylint
     }
     "test"    {
         Invoke-Test

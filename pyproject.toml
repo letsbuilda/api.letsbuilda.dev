@@ -6,56 +6,47 @@ authors = [
 ]
 license = { text = "MIT" }
 readme = "README.md"
-requires-python = ">=3.10"
-dynamic = ["version", "dependencies"]
+requires-python = ">=3.11,<3.13"
+dynamic = ["version", "dependencies", "optional-dependencies"]
 
 [project.urls]
 repository = "https://github.com/letsbuilda/api.letsbuilda.dev/"
 documentation = "https://docs.letsbuilda.dev/api.letsbuilda.dev/"
 
-[project.optional-dependencies]
-dev = [
-    "pip-tools",
-    "pre-commit",
-    "black",
-    "isort",
-    "ruff",
-]
-tests = [
-    "pytest",
-    "httpx", # for fastapi.testclient.TestClient
-]
-docs = [
-    "sphinx",
-    "furo",
-    "sphinx-autoapi",
-    "releases",
-]
-
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools.dynamic]
-version = { attr = "api.__version__" }
-dependencies = { file = ["requirements.txt"] }
+[tool.setuptools.dynamic.version]
+attr = "api.__version__"
 
-[tool.black]
-target-version = ["py310"]
-line-length = 120
+[tool.setuptools.dynamic.dependencies]
+file = ["requirements/requirements.txt"]
 
-[tool.isort]
-profile = "black"
-
-[tool.pytest.ini_options]
-addopts = "tests -r a -v --doctest-modules src"
+[tool.setuptools.dynamic.optional-dependencies]
+dev = { file = ["requirements/requirements-dev.txt"] }
+tests = { file = ["requirements/requirements-tests.txt"] }
+docs = { file = ["requirements/requirements-docs.txt"] }
 
 [tool.ruff]
+preview = true
+unsafe-fixes = true
+target-version = "py311"
+select = ["ALL"]
 line-length = 120
+ignore = [
+    "CPY001", # (Missing copyright notice at top of file) - No license
+    "S311", # (Standard pseudo-random generators are not suitable for cryptographic purposes) - Not a crypto lib
+]
 
-[tool.pylint.messages_control]
-disable = "C0103,R0903,E0213"
-# justifications:
-# C0103 (invalid-name) - pydantic
-# R0903 (too-few-public-methods) - models
-# E0213 (no-self-argument) - pydantic
+[tool.ruff.extend-per-file-ignores]
+"docs/*" = [
+    "INP001", # (File `tests/*.py` is part of an implicit namespace package. Add an `__init__.py`.) - Docs are not modules
+]
+"tests/*" = [
+    "INP001", # (File `tests/*.py` is part of an implicit namespace package. Add an `__init__.py`.) - Tests are not modules
+    "S101", # (Use of `assert` detected) - Yes, that's the point
+]
+
+[tool.ruff.pydocstyle]
+convention = "numpy"

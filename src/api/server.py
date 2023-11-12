@@ -1,4 +1,4 @@
-"""API server definition"""
+"""API server definition."""
 
 from os import getenv
 
