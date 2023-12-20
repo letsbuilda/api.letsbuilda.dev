@@ -35,8 +35,10 @@ python-dotenv==1.0.0
     # via uvicorn
 pyyaml==6.0.1
     # via uvicorn
-sentry-sdk[fastapi]==1.34.0
-    # via -r requirements/requirements.in
+sentry-sdk[fastapi]==1.38.0
+    # via
+    #   -r requirements/requirements.in
+    #   sentry-sdk
 sniffio==1.3.0
     # via anyio
 starlette==0.27.0
