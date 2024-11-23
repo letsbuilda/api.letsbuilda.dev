@@ -1,6 +1,9 @@
 Changelog
 =========
 
+- :release:`2.0.0 <23rd November 2024>`
+- :feature:`-` Switch to Litestar
+
 - :release:`1.8.1 <11th March 2023>`
 - :feature:`28` CORS
 
