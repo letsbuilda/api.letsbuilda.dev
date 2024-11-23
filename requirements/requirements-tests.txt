@@ -19,7 +19,7 @@ h11==0.14.0
     #   httpcore
 httpcore==1.0.2
     # via httpx
-httpx==0.26.0
+httpx==0.27.2
     # via -r requirements/requirements-tests.in
 idna==3.4
     # via
@@ -30,13 +30,13 @@ iniconfig==2.0.0
     # via pytest
 packaging==23.2
     # via pytest
-pluggy==1.3.0
+pluggy==1.5.0
     # via pytest
-pytest==8.0.0
+pytest==8.3.3
     # via
     #   -r requirements/requirements-tests.in
     #   pytest-randomly
-pytest-randomly==3.15.0
+pytest-randomly==3.16.0
     # via -r requirements/requirements-tests.in
 sniffio==1.3.0
     # via
