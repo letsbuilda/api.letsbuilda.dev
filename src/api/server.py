@@ -14,6 +14,7 @@ from litestar.openapi.plugins import (
     SwaggerRenderPlugin,
     YamlRenderPlugin,
 )
+from sentry_sdk.integrations.litestar import LitestarIntegration
 
 from .constants import GIT_SHA, Sentry
 from .modules import controllers
@@ -25,6 +26,9 @@ sentry_sdk.init(
     traces_sample_rate=0.25,
     profiles_sample_rate=0.25,
     release=f"{Sentry.release_prefix}@{GIT_SHA}",
+    integrations=[
+        LitestarIntegration(),
+    ],
 )
 
 
