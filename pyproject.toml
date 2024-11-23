@@ -73,3 +73,16 @@ ignore = [
 
 [tool.ruff.lint.pydocstyle]
 convention = "numpy"
+
+[tool.mypy]
+plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = ["imsosorry"]
+ignore_missing_imports = true
+
+[tool.coverage.run]
+source = ["api"]
+
+[tool.pytest.ini_options]
+addopts = "--strict-markers"

@@ -61,7 +61,7 @@ class GeneratorController(Controller):
         if data.uuid_type == 1:
             function = uuid.uuid1
         elif data.uuid_type == 4:  # noqa: PLR2004 - comparing ints
-            function = uuid.uuid4
+            function = uuid.uuid4  # type: ignore[assignment]
         else:
             msg = f"unsupported UUID type: {data.uuid_type}"
             raise ValueError(msg)
