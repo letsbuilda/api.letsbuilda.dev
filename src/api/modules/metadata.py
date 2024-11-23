@@ -2,18 +2,28 @@
 
 from os import getenv
 
-from fastapi import APIRouter
+from litestar import Controller, get
+from pydantic import BaseModel
 
 from api import __version__
-from api.models import ServerMetadata
-
-router = APIRouter(tags=["metadata"])
 
 
-@router.get("/")
-async def metadata() -> ServerMetadata:
-    """Get server metadata."""
-    return ServerMetadata(
-        version=__version__,
-        server_commit=getenv("GIT_SHA", "development"),
-    )
+class ServerMetadata(BaseModel):
+    """Metadata about the server."""
+
+    version: str
+    server_commit: str
+
+
+class MetadataController(Controller):
+    """Metadata controller."""
+
+    path = "/"
+
+    @get("/")
+    async def server_metadata(self) -> ServerMetadata:
+        """Return metadata about the server."""
+        return ServerMetadata(
+            version=__version__,
+            server_commit=getenv("GIT_SHA", "development"),
+        )

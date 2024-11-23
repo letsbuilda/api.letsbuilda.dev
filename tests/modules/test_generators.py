@@ -3,23 +3,21 @@
 import uuid
 from http import HTTPStatus
 
-from api.server import app
-from fastapi.testclient import TestClient
-
-client = TestClient(app)
+from litestar import Litestar
+from litestar.testing import TestClient
 
 
-def test_bulk_uuids() -> None:
+def test_bulk_uuids(test_client: TestClient[Litestar]) -> None:
     """Test bulk UUIDs."""
-    response = client.post("/generators/uuids/", json={"uuid_type": 1, "quantity": 1})
+    response = test_client.post("/generators/uuids/", json={"uuid_type": 1, "quantity": 1})
     assert response.status_code == HTTPStatus.OK
     first = response.json()["uuids"][0]
     assert isinstance(uuid.UUID(first), uuid.UUID)
 
 
-def test_random_numbers() -> None:
+def test_random_numbers(test_client: TestClient[Litestar]) -> None:
     """Test random numbers."""
-    response = client.post("/generators/random-numbers/", json={})
+    response = test_client.post("/generators/random-numbers/", json={})
     assert response.status_code == HTTPStatus.OK
     assert response.json() == {
         "numbers": [1],

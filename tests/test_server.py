@@ -2,16 +2,15 @@
 
 from http import HTTPStatus
 
+from litestar import Litestar
+from litestar.testing import TestClient
+
 from api import __version__
-from api.server import app
-from fastapi.testclient import TestClient
-
-client = TestClient(app)
 
 
-def test_read_main() -> None:
+def test_get_metadata(test_client: TestClient[Litestar]) -> None:
     """Test getting the root route."""
-    response = client.get("/")
+    response = test_client.get("/")
     assert response.status_code == HTTPStatus.OK
     assert response.json() == {
         "version": __version__,

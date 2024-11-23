@@ -1,4 +1,4 @@
-name: "Python CI"
+name: Python CI
 
 on:
   push:
@@ -7,24 +7,46 @@ on:
   pull_request:
 
 jobs:
-  pre-commit:
-    uses: darbiadev/.github/.github/workflows/generic-precommit.yaml@29197a38ef3741064f47b623ede0c1ad22402c57 # v13.0.3
+  lint-test:
+    runs-on: ubuntu-latest
 
-  lint:
-    needs: pre-commit
-    uses: darbiadev/.github/.github/workflows/python-lint.yaml@29197a38ef3741064f47b623ede0c1ad22402c57 # v13.0.3
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
-  test:
-    needs: lint
-    strategy:
-      matrix:
-        os: [ ubuntu-latest ]
-        python-version: [ "3.11" ]
+      - name: Setup Python
+        uses: actions/setup-python@0b93645e9fea7318ecaed2b359559ac225c90a2b # v5.3.0
+        with:
+          python-version: 3.12
+          allow-prereleases: true
+          cache: pip
+          cache-dependency-path: uv.lock
 
-    uses: darbiadev/.github/.github/workflows/python-test.yaml@29197a38ef3741064f47b623ede0c1ad22402c57 # v13.0.3
-    with:
-      os: ${{ matrix.os }}
-      python-version: ${{ matrix.python-version }}
+      - name: Set up uv
+        run: curl -LsSf https://astral.sh/uv/install.sh | sh
+
+      - name: Sync dependencies
+        run: uv sync --group dev --group tests
+
+      - name: Run pre-commit
+        run: uv run pre-commit run --all-files
+
+      - name: Check formatting
+        run: uv run ruff format --check .
+
+      - name: Run Ruff checks
+        run: uv run ruff check --output-format=github .
+
+      - name: Run mypy
+        run: uv run mypy --strict src/
+
+      - name: Run tests
+        run: uv run python -m coverage run -m pytest -v
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@d168679d447a7d9f9917d4b26caf2cfbf080cfb4 # v5.0.6
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
   docs:
     # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
@@ -33,4 +55,4 @@ jobs:
       pages: write
       id-token: write
 
-    uses: darbiadev/.github/.github/workflows/github-pages-python-sphinx.yaml@29197a38ef3741064f47b623ede0c1ad22402c57 # v13.0.3
+    uses: darbiadev/.github/.github/workflows/github-pages-python-sphinx.yaml@41518576ed6c499ed3e68d5cbceaeaa50abd471a # v14.1.0

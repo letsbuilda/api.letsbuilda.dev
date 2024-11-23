@@ -1,17 +1,48 @@
 [project]
 name = "api.letsbuilda.dev"
 description = "Public API for our projects"
-authors = [
-    { name = "Bradley Reynolds", email = "bradley.reynolds@darbia.dev" },
-]
+authors = [{ name = "Bradley Reynolds", email = "bradley.reynolds@darbia.dev" }]
 license = { text = "MIT" }
 readme = "README.md"
-requires-python = ">=3.11,<3.13"
-dynamic = ["version", "dependencies", "optional-dependencies"]
+requires-python = ">=3.12"
+dynamic = ["version"]
+dependencies = [
+    # Core
+    ## Metrics
+    "sentry-sdk>=2.10.0",
+    ## Settings and configuration
+    "pydantic>=2.10.1",
+    "pydantic-settings>=2.6.1",
+    ## Web
+    "gunicorn>=23.0.0",
+    "uvicorn-worker>=0.2.0",
+    "uvicorn[standard]>=0.30.3",
+    "litestar[brotli]>=2.10.0",
+    "imsosorry>=1.2.1",
+]
 
 [project.urls]
 repository = "https://github.com/letsbuilda/api.letsbuilda.dev/"
 documentation = "https://docs.letsbuilda.dev/api.letsbuilda.dev/"
+
+[project.optional-dependencies]
+docs = [
+    "sphinx>=7.4.4",
+    "furo>=2024.5.6",
+    "sphinx-autoapi>=3.1.2",
+    "releases>=2.1.1",
+]
+
+[dependency-groups]
+dev = [
+    # DX
+    "nox>=2024.4.15",
+    "pre-commit>=3.7.1",
+    # Linters
+    "ruff>=0.5.2",
+    "mypy>=1.10.1",
+]
+tests = ["pytest>=8.2.2", "pytest-randomly>=3.15.0", "coverage>=7.6.1"]
 
 [build-system]
 requires = ["setuptools", "wheel"]
@@ -20,33 +51,38 @@ build-backend = "setuptools.build_meta"
 [tool.setuptools.dynamic.version]
 attr = "api.__version__"
 
-[tool.setuptools.dynamic.dependencies]
-file = ["requirements/requirements.txt"]
-
-[tool.setuptools.dynamic.optional-dependencies]
-dev = { file = ["requirements/requirements-dev.txt"] }
-tests = { file = ["requirements/requirements-tests.txt"] }
-docs = { file = ["requirements/requirements-docs.txt"] }
-
 [tool.ruff]
-preview = true
-unsafe-fixes = true
-target-version = "py311"
-select = ["ALL"]
+target-version = "py313"
 line-length = 120
+
+[tool.ruff.lint]
+select = ["ALL"]
 ignore = [
     "CPY001", # (Missing copyright notice at top of file) - No license
-    "S311", # (Standard pseudo-random generators are not suitable for cryptographic purposes) - Not a crypto lib
+    "S311",   # (Standard pseudo-random generators are not suitable for cryptographic purposes) - Not a crypto lib
 ]
 
-[tool.ruff.extend-per-file-ignores]
+[tool.ruff.lint.extend-per-file-ignores]
 "docs/*" = [
     "INP001", # (File `tests/*.py` is part of an implicit namespace package. Add an `__init__.py`.) - Docs are not modules
 ]
 "tests/*" = [
     "INP001", # (File `tests/*.py` is part of an implicit namespace package. Add an `__init__.py`.) - Tests are not modules
-    "S101", # (Use of `assert` detected) - Yes, that's the point
+    "S101",   # (Use of `assert` detected) - Yes, that's the point
 ]
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "numpy"
+
+[tool.mypy]
+plugins = ["pydantic.mypy"]
+
+[[tool.mypy.overrides]]
+module = ["imsosorry"]
+ignore_missing_imports = true
+
+[tool.coverage.run]
+source = ["api"]
+
+[tool.pytest.ini_options]
+addopts = "--strict-markers"

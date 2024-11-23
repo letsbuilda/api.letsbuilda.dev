@@ -1,39 +1,52 @@
 """API server definition."""
 
-from os import getenv
-
 import sentry_sdk
-from fastapi import FastAPI
-from fastapi.middleware.cors import CORSMiddleware
+from litestar import Litestar
+from litestar.config.compression import CompressionConfig
+from litestar.config.cors import CORSConfig
+from litestar.middleware.rate_limit import RateLimitConfig
+from litestar.openapi.config import OpenAPIConfig
+from litestar.openapi.plugins import (
+    RapidocRenderPlugin,
+    RedocRenderPlugin,
+    ScalarRenderPlugin,
+    StoplightRenderPlugin,
+    SwaggerRenderPlugin,
+    YamlRenderPlugin,
+)
 
-from . import __version__
-from .modules import routers
+from .constants import GIT_SHA, Sentry
+from .modules import controllers
 
-release_prefix = getenv("API_SENTRY_RELEASE_PREFIX", "api")
-git_sha = getenv("GIT_SHA", "development")
 sentry_sdk.init(
-    dsn=getenv("API_SENTRY_DSN"),
-    environment=getenv("API_SENTRY_ENV"),
+    dsn=Sentry.dsn,
+    environment=Sentry.environment,
     send_default_pii=True,
-    traces_sample_rate=1.0,
-    profiles_sample_rate=1.0,
-    release=f"{release_prefix}@{git_sha}",
+    traces_sample_rate=0.25,
+    profiles_sample_rate=0.25,
+    release=f"{Sentry.release_prefix}@{GIT_SHA}",
 )
 
 
-app = FastAPI(
-    title="Let's Build A API",
-    description="An API to host Let's Build A's projects",
-    version=__version__,
+cors_config = CORSConfig(allow_origins=["*"])
+rate_limit_config = RateLimitConfig(rate_limit=("hour", 5_000), exclude=["/schema"])
+
+
+app = Litestar(
+    route_handlers=controllers,
+    middleware=[rate_limit_config.middleware],
+    openapi_config=OpenAPIConfig(
+        title="Core",
+        version=GIT_SHA,
+        render_plugins=[
+            RapidocRenderPlugin(),
+            RedocRenderPlugin(),
+            ScalarRenderPlugin(),
+            StoplightRenderPlugin(),
+            SwaggerRenderPlugin(),
+            YamlRenderPlugin(),
+        ],
+    ),
+    cors_config=cors_config,
+    compression_config=CompressionConfig(backend="brotli", brotli_gzip_fallback=True),
 )
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-
-for router in routers:
-    app.include_router(router)
