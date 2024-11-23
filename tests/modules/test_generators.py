@@ -3,8 +3,9 @@
 import uuid
 from http import HTTPStatus
 
-from api.server import app
 from fastapi.testclient import TestClient
+
+from api.server import app
 
 client = TestClient(app)
 

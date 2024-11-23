@@ -2,9 +2,10 @@
 
 from http import HTTPStatus
 
+from fastapi.testclient import TestClient
+
 from api import __version__
 from api.server import app
-from fastapi.testclient import TestClient
 
 client = TestClient(app)
 

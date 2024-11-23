@@ -1,14 +1,17 @@
 """Fun module for API."""
 
-from fastapi import APIRouter
 from imsosorry import uwuify
+from litestar import Controller, post
 
 from api.models import TextModel
 
-router = APIRouter(prefix="/fun", tags=["fun"])
 
+class FunController(Controller):
+    """Fun controller."""
 
-@router.post("/uwuify/")
-async def uwuify_route(text: TextModel) -> dict[str, str]:
-    """Convert text to UwU meme style."""
-    return {"text": uwuify(text.text)}
+    path = "/fun"
+
+    @post("/uwuify/", status_code=200)
+    async def uwuify(self, data: TextModel) -> dict[str, str]:
+        """UwUify text."""
+        return {"text": uwuify(data.text)}
