@@ -6,7 +6,14 @@ from litestar.config.compression import CompressionConfig
 from litestar.config.cors import CORSConfig
 from litestar.middleware.rate_limit import RateLimitConfig
 from litestar.openapi.config import OpenAPIConfig
-from litestar.openapi.plugins import ScalarRenderPlugin
+from litestar.openapi.plugins import (
+    RapidocRenderPlugin,
+    RedocRenderPlugin,
+    ScalarRenderPlugin,
+    StoplightRenderPlugin,
+    SwaggerRenderPlugin,
+    YamlRenderPlugin,
+)
 
 from .constants import GIT_SHA, Sentry
 from .modules import controllers
@@ -28,7 +35,18 @@ rate_limit_config = RateLimitConfig(rate_limit=("hour", 5_000), exclude=["/schem
 app = Litestar(
     route_handlers=controllers,
     middleware=[rate_limit_config.middleware],
-    openapi_config=OpenAPIConfig(title="Core", version=GIT_SHA, render_plugins=[ScalarRenderPlugin()]),
+    openapi_config=OpenAPIConfig(
+        title="Core",
+        version=GIT_SHA,
+        render_plugins=[
+            RapidocRenderPlugin(),
+            RedocRenderPlugin(),
+            ScalarRenderPlugin(),
+            StoplightRenderPlugin(),
+            SwaggerRenderPlugin(),
+            YamlRenderPlugin(),
+        ],
+    ),
     cors_config=cors_config,
     compression_config=CompressionConfig(backend="brotli", brotli_gzip_fallback=True),
 )
