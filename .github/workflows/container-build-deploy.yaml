@@ -1,4 +1,4 @@
-name: "Container Build and Push"
+name: Container Build and Deploy
 
 on:
   push:
@@ -20,3 +20,11 @@ jobs:
     uses: darbiadev/.github/.github/workflows/container-build-push.yaml@41518576ed6c499ed3e68d5cbceaeaa50abd471a # v14.1.0
     with:
       file-name: Dockerfile
+
+  deploy:
+    needs: build-push
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
+    steps:
+      - name: "Update deployment"
+        run: curl -X POST '${{ secrets.DEPLOY_WEBHOOK }}'
