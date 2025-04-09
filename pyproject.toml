@@ -2,9 +2,8 @@
 name = "api.letsbuilda.dev"
 description = "Public API for our projects"
 authors = [{ name = "Bradley Reynolds", email = "bradley.reynolds@darbia.dev" }]
-license = { text = "MIT" }
-readme = "README.md"
-requires-python = ">=3.12"
+license = "MIT"
+requires-python = ">=3.13"
 dynamic = ["version"]
 dependencies = [
     # Core
@@ -45,7 +44,7 @@ dev = [
 tests = ["pytest>=8.2.2", "pytest-randomly>=3.15.0", "coverage>=7.6.1"]
 
 [build-system]
-requires = ["setuptools", "wheel"]
+requires = ["setuptools >= 77.0.3"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.dynamic.version]
