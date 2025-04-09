@@ -1,4 +1,9 @@
 repos:
+  - repo: meta
+    hooks:
+      - id: check-hooks-apply
+      - id: check-useless-excludes
+
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v5.0.0
     hooks:
@@ -15,20 +20,6 @@ repos:
         exclude: .devcontainer/devcontainer-lock.json
 
   - repo: https://github.com/astral-sh/uv-pre-commit
-    rev: 0.5.4
+    rev: 0.6.13
     hooks:
       - id: uv-lock
-      - id: uv-export
-        args:
-          - --frozen
-          - --no-emit-project
-          - --output-file=requirements.txt
-        files: pyproject.toml|uv.lock
-      - id: uv-export
-        args:
-          - --frozen
-          - --no-emit-project
-          - --all-extras
-          - --all-groups
-          - --output-file=requirements-dependabot.txt
-        files: pyproject.toml|uv.lock
