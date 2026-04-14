@@ -1,11 +1,13 @@
 """Test server."""
 
 from http import HTTPStatus
-
-from litestar import Litestar
-from litestar.testing import TestClient
+from typing import TYPE_CHECKING
 
 from api import __version__
+
+if TYPE_CHECKING:
+    from litestar import Litestar
+    from litestar.testing import TestClient
 
 
 def test_get_metadata(test_client: TestClient[Litestar]) -> None:

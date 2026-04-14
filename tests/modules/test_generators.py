@@ -2,9 +2,11 @@
 
 import uuid
 from http import HTTPStatus
+from typing import TYPE_CHECKING
 
-from litestar import Litestar
-from litestar.testing import TestClient
+if TYPE_CHECKING:
+    from litestar import Litestar
+    from litestar.testing import TestClient
 
 
 def test_bulk_uuids(test_client: TestClient[Litestar]) -> None:

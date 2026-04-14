@@ -5,7 +5,7 @@ from random import randint
 from typing import Literal
 
 from litestar import Controller, post
-from pydantic import BaseModel, Field, validator
+from pydantic import BaseModel, Field, ValidationInfo, field_validator
 
 
 class UUIDConfig(BaseModel):
@@ -28,10 +28,11 @@ class NumbersConfig(BaseModel):
     upper_bound: int = Field(default=1)
     quantity: int = Field(gt=0, default=1)
 
-    @validator("upper_bound")
-    def upper_bound_must_be_greater_than_lower_bound(cls, v: int, values: dict) -> int:  # type: ignore[type-arg] # noqa: N805
+    @field_validator("upper_bound")
+    def upper_bound_must_be_greater_than_lower_bound(cls, v: int, info: ValidationInfo) -> int:  # noqa: N805
         """Confirm upper bound is greater than lower bound."""
-        if "lower_bound" in values and v < values["lower_bound"]:
+        lower_bound = info.data.get("lower_bound")
+        if lower_bound is not None and v < lower_bound:
             msg = "upper bound must be greater than lower bound"
             raise ValueError(msg)
         return v

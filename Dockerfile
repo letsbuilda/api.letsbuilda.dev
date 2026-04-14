@@ -1,6 +1,6 @@
-FROM python:3.13-slim@sha256:e8eb2555f37d060a136bb68261e6998b90b499b4b83aee3e6d8b3a874741eb32
+FROM python:3.14-slim@sha256:5e59aae31ff0e87511226be8e2b94d78c58f05216efda3b07dbbed938ec8583b
 
-COPY --from=ghcr.io/astral-sh/uv:0.6.13@sha256:0b6dc79013b689f3bc0cbf12807cb1c901beaafe80f2ee10a1d76aa3842afb92 /uv /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.11.6@sha256:b1e699368d24c57cda93c338a57a8c5a119009ba809305cc8e86986d4a006754 /uv /bin/
 
 # Define Git SHA build argument for Sentry
 ARG git_sha="development"
