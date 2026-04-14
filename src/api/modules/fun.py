@@ -3,7 +3,7 @@
 from imsosorry import uwuify
 from litestar import Controller, post
 
-from api.models import TextModel
+from api.models import TextModel  # noqa: TC001
 
 
 class FunController(Controller):

@@ -1,12 +1,16 @@
 """Test fixtures for the test suite."""
 
-from collections.abc import Iterator
+from typing import TYPE_CHECKING
 
 import pytest
-from litestar import Litestar
 from litestar.testing import TestClient
 
 from api.server import app
+
+if TYPE_CHECKING:
+    from collections.abc import Iterator
+
+    from litestar import Litestar
 
 app.debug = True
 
