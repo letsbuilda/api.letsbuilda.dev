@@ -1,0 +1,5 @@
+rules:
+  secrets-outside-env:
+    ignore:
+     - container-build-deploy.yaml
+     - sentry-release.yaml
