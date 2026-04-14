@@ -29,7 +29,7 @@ class NumbersConfig(BaseModel):
     quantity: int = Field(gt=0, default=1)
 
     @field_validator("upper_bound")
-    def upper_bound_must_be_greater_than_lower_bound(cls, v: int, info: ValidationInfo) -> int:  # noqa: N805
+    def upper_bound_must_be_greater_than_lower_bound(self, v: int, info: ValidationInfo) -> int:
         """Confirm upper bound is greater than lower bound."""
         lower_bound = info.data.get("lower_bound")
         if lower_bound is not None and v < lower_bound:
