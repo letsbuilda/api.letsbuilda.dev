@@ -8,15 +8,15 @@ dynamic = ["version"]
 dependencies = [
     # Core
     ## Metrics
-    "sentry-sdk>=2.58.0",
+    "sentry-sdk>=2.60.0",
     ## Settings and configuration
-    "pydantic>=2.13.3",
-    "pydantic-settings>=2.14.0",
+    "pydantic>=2.13.4",
+    "pydantic-settings>=2.14.1",
     ## Web
-    "gunicorn>=25.3.0",
+    "gunicorn>=26.0.0",
     "uvicorn-worker>=0.4.0",
-    "uvicorn[standard]>=0.46.0",
-    "litestar[brotli]>=2.21.1",
+    "uvicorn[standard]>=0.48.0",
+    "litestar[brotli]>=2.22.0",
     "imsosorry>=1.3.0",
 ]
 
@@ -27,16 +27,16 @@ documentation = "https://docs.letsbuilda.dev/api.letsbuilda.dev/"
 [dependency-groups]
 dev = [
     "nox>=2026.4.10",
-    "prek>=0.3.10",
-    "ruff>=0.15.11",
-    "mypy>=1.20.2",
-    "ty>=0.0.32",
+    "prek>=0.4.1",
+    "ruff>=0.15.14",
+    "mypy>=2.1.0",
+    "ty>=0.0.39",
 ]
 tests = [
     "pytest>=9.0.3",
-    "coverage>=7.13.5",
+    "coverage>=7.14.0",
     "pytest-randomly>=4.1.0",
-    "pytest-codspeed>=4.3.0",
+    "pytest-codspeed>=5.0.3",
 ]
 docs = [
     "sphinx>=8.1.0",
